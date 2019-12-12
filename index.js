@@ -284,7 +284,9 @@ class SortableListView extends React.Component {
           pageX,
           pageY,
         }
+
         this.wrapperLayout = layout
+        this.forceUpdate();
       }
     )
   }
@@ -488,19 +490,25 @@ class SortableListView extends React.Component {
 
     return (
       <View ref="wrapper" style={{ flex: 1 }} collapsable={false}>
-        <ListViewComponent
-          enableEmptySections
-          {...this.props}
-          {...this.state.panResponder.panHandlers}
-          ref="list"
-          dataSource={dataSource}
-          onScroll={this.handleScroll}
-          onContentSizeChange={this.handleContentSizeChange}
-          onLayout={this.handleListLayout}
-          scrollEnabled={scrollEnabled}
-          renderRow={this.renderRow}
-        />
-        {this.renderActive()}
+        {
+          this.wrapperLayout !== undefined
+          ? (<>
+              <ListViewComponent
+                enableEmptySections
+                {...this.props}
+                {...this.state.panResponder.panHandlers}
+                ref="list"
+                dataSource={dataSource}
+                onScroll={this.handleScroll}
+                onContentSizeChange={this.handleContentSizeChange}
+                onLayout={this.handleListLayout}
+                scrollEnabled={scrollEnabled}
+                renderRow={this.renderRow}
+              />
+              {this.renderActive()}
+            </>)
+          : null
+        }
       </View>
     )
   }
