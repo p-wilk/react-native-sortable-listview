@@ -296,8 +296,8 @@ class SortableListView extends React.Component {
   }
 
   handleScroll = e => {
-    this.scrollValue = e.nativeEvent.contentOffset.y
-    if (this.props.onScroll) this.props.onScroll(e)
+    if (!this.state.active) { this.scrollValue = e.nativeEvent.contentOffset.y }
+    if (this.props.onScroll) { this.props.onScroll(e) }
   }
 
   handleContentSizeChange = (width, height) => {
