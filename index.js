@@ -5,7 +5,6 @@ import {
   Dimensions,
   PanResponder,
   LayoutAnimation,
-  InteractionManager,
 } from 'react-native'
 import ListView from 'deprecated-react-native-listview'
 
@@ -459,12 +458,6 @@ class SortableListView extends React.Component {
     this.setOrder(this.props)
   }
 
-  componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-      this.timer = setTimeout(() => this && this.measureWrapper(), 0)
-    })
-  }
-
   componentWillReceiveProps(props) {
     this.setOrder(props)
   }
@@ -489,7 +482,7 @@ class SortableListView extends React.Component {
     const ListViewComponent = this.props.ListViewComponent || ListView
 
     return (
-      <View ref="wrapper" style={{ flex: 1 }} collapsable={false}>
+      <View ref="wrapper" style={{ flex: 1 }} collapsable={false} onLayout={this.measureWrapper}>
         {
           this.wrapperLayout !== undefined
           ? (<>
